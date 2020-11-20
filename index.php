@@ -1,71 +1,48 @@
-<?php 
-    require_once('connection.php');
-
-    if (isset($_REQUEST['delete_id'])) {
-        $id = $_REQUEST['delete_id'];
-
-        $select_stmt = $db->prepare("SELECT * FROM tbl_person WHERE id = :id");
-        $select_stmt->bindParam(':id', $id);
-        $select_stmt->execute();
-        $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Delete an original record from db
-        $delete_stmt = $db->prepare('DELETE FROM tbl_person WHERE id = :id');
-        $delete_stmt->bindParam(':id', $id);
-        $delete_stmt->execute();
-
-        header('Location:index.php');
-    }
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="bootstrap/bootstrap.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insert</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
-
-    <div class="container">
-    <div class="display-3 text-center">Information</div>
-    <a href="add.php" class="btn btn-success mb-3">Add+</a>
-    <table class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Edit Name</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php 
-                $select_stmt = $db->prepare("SELECT * FROM tbl_person");
-                $select_stmt->execute();
-
-                while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-            ?>
-
-                <tr>
-                    <td><?php echo $row["firstname"]; ?></td>
-                    <td><?php echo $row["lastname"]; ?></td>
-                    <td><a href="edit.php?update_id=<?php echo $row["id"]; ?>" class="btn btn-warning">Edit</a></td>
-                    <td><a href="?delete_id=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a></td>
-                </tr>
-
-            <?php } ?>
-        </tbody>
-    </table>
+  <div class="container">
+  <div class="display-3 text-center">Insert</div>
+  <form action = "insert.php" method = "post" id="CommentForm" class="form-horizontal mt-5">
+    <div class="form-group text-center">
+      <div class="row">
+          <label for="firstname" class="col-sm-3 control-label">Fisrtname</label>
+          <div class="col-sm-9">
+              <input type="text" name = "name" id="idName" class="form-control" placeholder="Enter Name...">
+          </div>
+      </div>
     </div>
-    
-    
-
-    <script src="js/slim.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <div class="form-group text-center">
+      <div class="row">
+          <label for="firstname" class="col-sm-3 control-label">Comment</label>
+          <div class="col-sm-9">
+              <textarea rows="10" cols="20" name = "comment" id="idComment" class="form-control" placeholder="Enter Comment..."></textarea>
+          </div>
+      </div>
+  </div>
+  <div class="form-group text-center">
+    <div class="row">
+        <label for="firstname" class="col-sm-3 control-label">Link</label>
+        <div class="col-sm-9">
+            <input type="text" name = "link" id="idLink" class="form-control" placeholder="Enter Link...">
+        </div>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <div class="col-md-12 mt-3">
+        <input type="submit" id="commentBtn" class="btn btn-success" value="Insert">
+        <a href="show.php" class="btn btn-danger">Cancel</a>
+    </div>
+  </div>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script> 
 </body>
 </html>
